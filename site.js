@@ -8,6 +8,19 @@
   const PHONE_TEL = "4159008563";
   const EMAIL = "dispatch@mobilecarbtesting.com";
 
+  /* The hub app — the catch-all "find a tester" destination for anyone
+     outside this site's San Diego County coverage and outside every
+     satellite radius. */
+  const APP = {
+    name: "CARB Clean Truck Check app",
+    url: "https://carbcleantruckcheck.app",
+    blurb: "Find a mobile tester anywhere in California and request a visit."
+  };
+
+  /* This site itself only serves San Diego County — not a radius that
+     spills past the county line. Approximate county reach from downtown. */
+  const HOME_AREA = { name: "San Diego County", lat: 32.7157, lon: -117.1611, radiusMiles: 45 };
+
   const SATELLITES = [
     {
       name: "Clean Truck Check Roseville",
@@ -41,7 +54,9 @@
     }
   ];
 
-  const NEARBY_MILES = 60;
+  /* A satellite site is offered when the visitor is within 50 miles of
+     that satellite city. */
+  const NEARBY_MILES = 50;
 
   const milesBetween = (lat1, lon1, lat2, lon2) => {
     const rad = (d) => (d * Math.PI) / 180;
@@ -87,6 +102,15 @@
         "<h3>" + s.name + "</h3><p>" + s.blurb + "</p>" + distance;
       satGrid.appendChild(card);
     });
+
+    /* The app card is always shown last — it covers everywhere the
+       city sites don't. */
+    const appCard = document.createElement("a");
+    appCard.className = "satellite-card";
+    appCard.href = APP.url;
+    appCard.rel = "noopener";
+    appCard.innerHTML = "<h3>" + APP.name + "</h3><p>" + APP.blurb + "</p>";
+    satGrid.appendChild(appCard);
   };
 
   const requestGeo = (onDone) => {
@@ -118,11 +142,26 @@
   const satelliteLinksHtml = () =>
     SATELLITES.map((s) => '<a href="' + s.url + '" rel="noopener">' + s.name + "</a>").join(" · ");
 
+  const appLinkHtml = () => '<a href="' + APP.url + '" rel="noopener">' + APP.name + "</a>";
+
   const nearestSatelliteReply = (pos) => {
     if (!pos) {
-      return "I couldn't read your location, but here are all of our sites: " + satelliteLinksHtml();
+      return (
+        "I couldn't read your location. The " + appLinkHtml() +
+        " can match you with a tester anywhere in California, or browse all sites: " + satelliteLinksHtml()
+      );
     }
     const { latitude, longitude } = pos.coords;
+
+    /* This site itself only covers San Diego County. */
+    const homeDistance = milesBetween(latitude, longitude, HOME_AREA.lat, HOME_AREA.lon);
+    if (homeDistance <= HOME_AREA.radiusMiles) {
+      return (
+        "You're in our San Diego County service area — you're in the right place. Call " +
+        '<a href="tel:' + PHONE_TEL + '">' + PHONE_DISPLAY + '</a> or use the <a href="/#intake">intake form</a> to book.'
+      );
+    }
+
     const withDist = SATELLITES.filter((s) => s.lat !== null)
       .map((s) => ({ ...s, distance: milesBetween(latitude, longitude, s.lat, s.lon) }))
       .sort((a, b) => a.distance - b.distance);
@@ -130,13 +169,14 @@
     if (nearest.distance <= NEARBY_MILES) {
       return (
         "You're about " + Math.round(nearest.distance) + ' miles from our <a href="' +
-        nearest.url + '" rel="noopener">' + nearest.name + "</a> service area — that site has local scheduling. All sites: " +
-        satelliteLinksHtml()
+        nearest.url + '" rel="noopener">' + nearest.name + "</a> service area — that site has local scheduling. You can also request a tester through the " +
+        appLinkHtml() + "."
       );
     }
     return (
-      "No satellite service area is within " + NEARBY_MILES + " miles, so this San Diego page is your best contact: call " +
-      '<a href="tel:' + PHONE_TEL + '">' + PHONE_DISPLAY + "</a>. Other sites: " + satelliteLinksHtml()
+      "You're outside San Diego County and more than " + NEARBY_MILES +
+      " miles from our satellite cities. The " + appLinkHtml() +
+      " is the best way to find a mobile tester near you. All sites: " + satelliteLinksHtml()
     );
   };
 
