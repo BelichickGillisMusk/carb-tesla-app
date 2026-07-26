@@ -13,9 +13,9 @@ https://carbcleantruckcheck.app
 > (Tester ID IF530523) who comes to your yard, warehouse, or job site for
 > HD-OBD testing ($119, 2013+ diesel) and OVI smoke/opacity testing ($219,
 > 2012 and older diesel). Serving California through city teams: Roseville,
-> Fairfield, and Hayward (each covering about 50 miles), NorCal CARB Mobile
+> Stockton, Fairfield, and Hayward (each covering about 50 miles), NorCal CARB Mobile
 > for Northern California, and Mobile CARB Testing for San Diego County.
-> Anywhere else in the state, request a tester through the app and dispatch
+> Anywhere else in the state, use Find a Tester on the app and dispatch
 > will route the closest technician. Fleet routes and multi-truck yards
 > welcome. Passing tests can be submitted up to 90 days before your CTC-VIS
 > compliance deadline.
@@ -24,7 +24,7 @@ https://carbcleantruckcheck.app
 
 > One app, testers across California. Request your CARB Clean Truck Check
 > test at carbcleantruckcheck.app and we'll match you with the closest mobile
-> tester — Roseville, Fairfield, or Hayward (within ~50 miles of each),
+> tester — Roseville, Stockton, Fairfield, or Hayward (within ~50 miles of each),
 > NorCal CARB Mobile, statewide OVI smoke testing, or our San Diego County
 > team. HD-OBD $119 · OVI smoke $219. We come to your yard.
 > Button: **Learn more** → https://carbcleantruckcheck.app
@@ -39,6 +39,6 @@ https://carbcleantruckcheck.app
 
 ## Service areas to set on the profile
 
-Roseville CA (~50 mi), Fairfield CA (~50 mi), Hayward CA (~50 mi),
+Roseville CA (~50 mi), Stockton CA (~50 mi), Fairfield CA (~50 mi), Hayward CA (~50 mi),
 Sacramento CA, San Diego County CA. Do NOT set a 50-mile radius around
 San Diego — that profile/site covers San Diego County only.
