@@ -39,8 +39,14 @@
       /* TODO: confirm the Stockton site URL before deploying. */
       name: "Clean Truck Check Stockton",
       url: "https://cleantruckcheckstockton.com",
-      blurb: "Stockton, Lodi, Manteca, and the Highway 99 corridor.",
+      blurb: "Stockton, Manteca, and the Highway 99 corridor.",
       lat: 37.9577, lon: -121.2908, radiusMiles: 50, coverage: "radius"
+    },
+    {
+      name: "Clean Truck Check Lodi",
+      url: "https://cleantruckchecklodi.com",
+      blurb: "Lodi, Galt, Woodbridge, and San Joaquin County yard visits.",
+      lat: 38.1302, lon: -121.2722, radiusMiles: 50, coverage: "radius"
     },
     {
       name: "NorCal CARB Mobile",
@@ -206,6 +212,11 @@
       reply:
         "Network pricing: <strong>$119</strong> for an HD-OBD test (2013+ diesel) and <strong>$219</strong> for an OVI smoke/opacity test (2012 and older diesel). Multi-truck yards may qualify for bundled scheduling — call <a href=\"tel:" +
         PHONE_TEL + '">' + PHONE_DISPLAY + "</a> for fleet routes."
+    },
+    {
+      match: /(vin|decode the truck|nhtsa|cab card)/i,
+      reply:
+        'Paste the 17-character VIN on the <a href="/vin/">VIN check</a> page. It reads the federal NHTSA file and suggests HD-OBD vs OVI from year and fuel type. That is vehicle identity — not your CTC-VIS pass/fail.'
     },
     {
       match: /(which test|what test|obd|ovi|opacity|smoke|older|newer|year|need)/i,

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Instant VIN Lookup | CARB Clean Truck Check</title>
+  <meta name="description" content="Decode a truck VIN against the federal NHTSA file, see whether HD-OBD or OVI smoke testing usually applies, then route to a credentialed mobile tester. Not a CTC-VIS pass/fail.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://cleantruckcheckvin.app/">
+  <meta property="og:title" content="Instant VIN Lookup | CARB Clean Truck Check">
+  <meta property="og:description" content="Federal VIN decode for California Clean Truck Check. See likely test type, then find a mobile tester in our network.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cleantruckcheckvin.app/">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2310b981%22/><text x=%2250%22 y=%2272%22 font-size=%2264%22 font-family=%22Arial%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22%230f172a%22>V</text></svg>">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/vin.css">
+  <script src="/site.js" defer></script>
+  <script src="/vin.js" defer></script>
+  <script>
+    (function () {
+      var host = location.hostname.replace(/^www\./, "").toLowerCase();
+      var vinHost = host === "cleantruckcheckvin.app";
+      var canonical = vinHost
+        ? "https://cleantruckcheckvin.app/"
+        : "https://carbcleantruckcheck.app/vin/";
+      var link = document.querySelector('link[rel="canonical"]');
+      if (link) link.href = canonical;
+    })();
+  </script>
+</head>
+<body class="hub">
+  <div class="hub-wrap">
+    <div class="hub-top">
+      <div class="live-dot"><i></i> Live compliance data</div>
+      <a class="legal" href="/" style="color:#64748b;text-decoration:none;">Find a tester</a>
+    </div>
+
+    <header class="hub-brand">
+      <p class="kicker">MOBILE</p>
+      <h1>CARB</h1>
+      <div class="rule"><i></i><span>COMPLIANCE HUB</span><i></i></div>
+    </header>
+
+    <div class="ticker" data-ticker>VIN lookup reads the federal NHTSA file — it is not your CARB pass/fail status.</div>
+
+    <section data-view="home">
+      <div class="glass tool-stack">
+        <button class="hub-btn accent" type="button" data-go="vin">Instant VIN Lookup</button>
+        <button class="hub-btn" type="button" data-go="intake">Document Intake (Smart Sync)</button>
+        <button class="hub-btn" type="button" data-go="finder">Find Credentialed Tester</button>
+        <button class="hub-btn" type="button" data-go="info">AI Regulatory Assistant</button>
+      </div>
+      <div class="quick-row">
+        <a class="quick" href="tel:4159008563"><span class="pad">☎</span><span>Call</span></a>
+        <a class="quick" href="sms:14159008563&amp;body=Help%20with%20CARB%20compliance"><span class="pad">✉</span><span>SMS</span></a>
+        <button class="quick" type="button" data-go="info"><span class="pad">i</span><span>101 info</span></button>
+      </div>
+      <div class="legal">
+        <p>A private proactive initiative to fill the state's education gap.</p>
+        <p>© 2026 Silverback Group LLC · Est. California</p>
+      </div>
+    </section>
+
+    <section class="view" data-view="vin" hidden>
+      <button class="back" type="button" data-go="home">← Hub home</button>
+      <div class="glass">
+        <h2 class="vin-title">Registry lookup <em>›</em></h2>
+        <div class="vin-field">
+          <input data-vin-input maxlength="17" inputmode="text" autocomplete="off" spellcheck="false" placeholder="ENTER VIN" aria-label="Vehicle identification number">
+        </div>
+        <p class="vin-status" data-vin-status></p>
+        <button class="hub-btn accent" type="button" data-vin-submit style="margin-top:0.9rem">Decode VIN</button>
+        <div class="result" data-vin-result hidden></div>
+      </div>
+      <p class="note" style="margin:1rem 0.4rem 0;text-align:center">Uses NHTSA vPIC. Camera / Gemini label scanning is not on this page — type the 17 characters from the door jamb or cab card.</p>
+    </section>
+
+    <section class="view" data-view="finder" hidden>
+      <button class="back" type="button" data-go="home">← Hub home</button>
+      <div class="glass finder-block" data-finder>
+        <h2 class="vin-title">Find a tester <em>›</em></h2>
+        <p class="note">In-network teams only. City crews cover about 50 miles; San Diego is county-only; everywhere else goes to statewide OVI dispatch.</p>
+        <div class="tool-row">
+          <label>Use your location
+            <button class="hub-btn accent" type="button" data-finder-geo style="margin-top:0.35rem">Find testers near me</button>
+          </label>
+          <label>Or pick your area
+            <select data-finder-city>
+              <option value="" selected disabled>Choose a city or region…</option>
+            </select>
+          </label>
+        </div>
+        <p class="muted" data-finder-note>Your location stays in the browser.</p>
+        <div class="satellite-grid" data-finder-results hidden style="margin-top:1rem"></div>
+        <p style="margin-top:1rem;text-align:center">
+          <a data-finder-offsite hidden href="https://carbcleantruckcheck.app/#find">Open the full finder on carbcleantruckcheck.app</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="view" data-view="intake" hidden>
+      <button class="back" type="button" data-go="home">← Hub home</button>
+      <div class="glass intake">
+        <h2 class="vin-title">Document intake <em>›</em></h2>
+        <p>Photo OCR from the AI Studio prototype needs a live Gemini key, so this page does not fake a scan. Email the cab card, engine tag, and plate to dispatch — they archive VIN, plate, and engine family before anyone rolls.</p>
+        <a class="hub-btn accent" href="mailto:dispatch@mobilecarbtesting.com?subject=Clean%20Truck%20Check%20document%20intake">Email photos to dispatch</a>
+        <button class="hub-btn" type="button" data-go="vin" style="margin-top:0.7rem">Or start with a VIN decode</button>
+      </div>
+    </section>
+
+    <section class="view" data-view="info" hidden>
+      <button class="back" type="button" data-go="home">← Hub home</button>
+      <div class="glass">
+        <h2 class="vin-title">101 info <em>›</em></h2>
+        <div class="info-list">
+          <article>
+            <h3>Which test?</h3>
+            <p>2013+ diesel (or 2018+ alt fuel) usually HD-OBD at $119. 2012 and older diesel usually OVI smoke/opacity at $219. VIN year is a starting point — engine year on the tag wins if they disagree.</p>
+          </article>
+          <article>
+            <h3>Deadlines</h3>
+            <p>Passing tests may be submitted up to 90 days before the vehicle deadline. Confirm dates in CTC-VIS, not from this lookup.</p>
+          </article>
+          <article>
+            <h3>TRUCRS / registry</h3>
+            <p>The truck still has to be in the CARB inventory with the right VIN and engine family. A federal VIN decode does not register the vehicle for you.</p>
+          </article>
+          <article>
+            <h3>Official sources</h3>
+            <p><a href="https://ww2.arb.ca.gov/resources/fact-sheets/clean-truck-check-faq-0" rel="noopener">CARB Clean Truck Check FAQ</a> · <a href="https://ww2.arb.ca.gov/clean-truck-check-requirements-vehicles-subject-semi-annual-compliance" rel="noopener">Testing requirements</a> · <a href="/answers/">Answers on this site</a></p>
+          </article>
+        </div>
+        <p class="note" style="margin-top:1rem">The corner assistant answers pricing, test type, and nearest tester from our network list — it does not search random Google testers.</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

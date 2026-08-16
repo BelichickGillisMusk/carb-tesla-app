@@ -14,6 +14,12 @@
  <style>:root{--primary:#2F241D;--accent:#FFC425;}</style>
  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23FFC425%22/><text x=%2250%22 y=%2272%22 font-size=%2264%22 font-family=%22Arial%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22%232F241D%22>C</text></svg>">
  <link rel="stylesheet" href="/styles.css">
+ <script>
+  (function () {
+    var host = location.hostname.replace(/^www\./, "").toLowerCase();
+    if (host === "cleantruckcheckvin.app") location.replace("/vin/");
+  })();
+ </script>
  <script src="/site.js" defer></script>
  <script type="application/ld+json">
  {
@@ -54,6 +60,7 @@
  </a>
  <div class="nav-actions">
  <a class="button secondary" href="#find">Find a tester</a>
+ <a class="button secondary" href="/vin/">VIN check</a>
  <a class="button secondary" href="#pricing">Pricing</a>
  <a class="button secondary" href="/answers/">Answers</a>
  <a class="button primary" href="tel:4159008563">Call 415-900-8563</a>
@@ -77,7 +84,7 @@
  </select>
  </label>
  </div>
- <p class="muted" data-finder-note>Your location is only used in your browser to match you with the closest team — it is never sent anywhere.</p>
+ <p class="muted" data-finder-note>Your location is only used in your browser to match you with the closest team — it is never sent anywhere. Not sure of the engine year? <a href="/vin/">Decode the VIN first</a>.</p>
  <div class="satellite-grid" data-finder-results hidden style="margin-top:1rem"></div>
  </div>
  <div class="hero-panel" id="pricing">
@@ -95,7 +102,7 @@
  </div>
  <div class="grid steps">
  <article class="card step"><h3>1 · Find your team</h3><p>Use the finder above — city teams cover about 50 miles around Roseville, Stockton, Hayward, Fairfield, and Sacramento. San Diego is covered county-wide.</p></article>
- <article class="card step"><h3>2 · Confirm the truck</h3><p>Dispatch checks model year, VIN details, and whether the vehicle needs HD-OBD or OVI smoke testing before anyone rolls.</p></article>
+ <article class="card step"><h3>2 · Confirm the truck</h3><p>Dispatch checks model year, VIN details, and whether the vehicle needs HD-OBD or OVI smoke testing before anyone rolls. You can <a href="/vin/">decode the VIN first</a> against the federal NHTSA file.</p></article>
  <article class="card step"><h3>3 · We come to you</h3><p>Testing happens at your yard, warehouse, or job site, and the compliance record goes with your truck files and renewal workflow.</p></article>
  </div>
  </div>
@@ -142,9 +149,11 @@
  <a class="brand" href="/"><span class="brand-mark">C</span><span>CARB Clean Truck Check</span></a>
  <div class="footer-links">
  <a href="/#find">Find a tester</a>
+ <a href="/vin/">VIN check</a>
  <a href="/answers/">Answers</a>
  <a href="https://cleantruckcheckroseville.com" rel="noopener">Roseville</a>
  <a href="https://cleantruckcheckstockton.com" rel="noopener">Stockton</a>
+ <a href="https://cleantruckchecklodi.com" rel="noopener">Lodi</a>
  <a href="https://cleantruckcheckfairfield.com" rel="noopener">Fairfield</a>
  <a href="https://cleantruckcheckhayward.com" rel="noopener">Hayward</a>
  <a href="https://norcalcarbmobile.com" rel="noopener">NorCal CARB Mobile</a>
