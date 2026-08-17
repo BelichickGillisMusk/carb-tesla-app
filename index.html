@@ -84,7 +84,13 @@
  </select>
  </label>
  </div>
- <p class="muted" data-finder-note>Your location is only used in your browser to match you with the closest team — it is never sent anywhere. Not sure of the engine year? <a href="/vin/">Decode the VIN first</a>.</p>
+ <label style="display:block;margin-top:0.85rem">Or enter a ZIP
+ <span style="display:flex;gap:0.5rem;margin-top:0.35rem">
+ <input data-finder-zip maxlength="5" inputmode="numeric" placeholder="ZIP code" aria-label="ZIP code" style="flex:1">
+ <button class="button secondary" type="button" data-finder-zip-go>Find</button>
+ </span>
+ </label>
+ <p class="muted" data-finder-note>Your location is only used in your browser to match you with the closest team — it is never sent anywhere. Not sure of the engine year? <a href="/vin/">Decode the VIN first</a> — after it matches, pick a ZIP on that same page to get your tester.</p>
  <div class="satellite-grid" data-finder-results hidden style="margin-top:1rem"></div>
  </div>
  <div class="hero-panel" id="pricing">

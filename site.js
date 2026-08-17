@@ -108,8 +108,6 @@
 
   /* ---------- Find a Tester UI ---------- */
 
-  const finder = document.querySelector("[data-finder]");
-
   const siteCardHtml = (s, highlight) => {
     const distance =
       s.distance !== undefined
@@ -121,9 +119,10 @@
     );
   };
 
-  const renderFinderResults = (lat, lon, label) => {
-    const out = finder.querySelector("[data-finder-results]");
-    const note = finder.querySelector("[data-finder-note]");
+  const renderFinderResults = (root, lat, lon, label) => {
+    const out = root.querySelector("[data-finder-results]");
+    const note = root.querySelector("[data-finder-note]");
+    if (!out || !note) return;
     const { matches, fallback } = findSites(lat, lon);
     if (matches.length) {
       note.textContent =
@@ -142,37 +141,92 @@
     out.hidden = false;
   };
 
-  if (finder) {
-    const citySelect = finder.querySelector("[data-finder-city]");
-    CITIES.forEach(([name], i) => {
-      const opt = document.createElement("option");
-      opt.value = String(i);
-      opt.textContent = name;
-      citySelect.appendChild(opt);
-    });
+  const lookupZip = async (zip) => {
+    const response = await fetch("https://api.zippopotam.us/us/" + encodeURIComponent(zip));
+    if (!response.ok) throw new Error("ZIP HTTP " + response.status);
+    const payload = await response.json();
+    const place = payload.places && payload.places[0];
+    if (!place) throw new Error("ZIP has no place");
+    return {
+      lat: parseFloat(place.latitude),
+      lon: parseFloat(place.longitude),
+      label: (place["place name"] || zip) + " " + zip
+    };
+  };
 
-    citySelect.addEventListener("change", () => {
-      const idx = Number(citySelect.value);
-      if (Number.isNaN(idx) || !CITIES[idx]) return;
-      const [name, lat, lon] = CITIES[idx];
-      renderFinderResults(lat, lon, name);
-    });
+  const bindFinder = (root) => {
+    const citySelect = root.querySelector("[data-finder-city]");
+    if (citySelect && citySelect.options.length <= 1) {
+      CITIES.forEach(([name], i) => {
+        const opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = name;
+        citySelect.appendChild(opt);
+      });
+      citySelect.addEventListener("change", () => {
+        const idx = Number(citySelect.value);
+        if (Number.isNaN(idx) || !CITIES[idx]) return;
+        const [name, lat, lon] = CITIES[idx];
+        renderFinderResults(root, lat, lon, name);
+      });
+    }
 
-    const geoBtn = finder.querySelector("[data-finder-geo]");
-    geoBtn.addEventListener("click", () => {
-      const note = finder.querySelector("[data-finder-note]");
-      if (!("geolocation" in navigator)) {
-        note.textContent = "Location is not available in this browser — pick your area from the list instead.";
+    const geoBtn = root.querySelector("[data-finder-geo]");
+    if (geoBtn) {
+      geoBtn.addEventListener("click", () => {
+        const note = root.querySelector("[data-finder-note]");
+        if (!("geolocation" in navigator)) {
+          if (note) note.textContent = "Location is not available in this browser — pick your area from the list instead.";
+          return;
+        }
+        if (note) note.textContent = "Locating…";
+        navigator.geolocation.getCurrentPosition(
+          (pos) => renderFinderResults(root, pos.coords.latitude, pos.coords.longitude, "your location"),
+          () => {
+            if (note) note.textContent = "Location was not shared — pick your area from the list instead.";
+          },
+          { maximumAge: 600000, timeout: 8000 }
+        );
+      });
+    }
+
+    const zipInput = root.querySelector("[data-finder-zip]");
+    const zipGo = root.querySelector("[data-finder-zip-go]");
+    const runZip = async () => {
+      const note = root.querySelector("[data-finder-note]");
+      const zip = String(zipInput && zipInput.value ? zipInput.value : "").replace(/\D/g, "").slice(0, 5);
+      if (zipInput && zipInput.value !== zip) zipInput.value = zip;
+      if (zip.length !== 5) {
+        if (note) note.textContent = "Enter a 5-digit ZIP.";
         return;
       }
-      note.textContent = "Locating…";
-      navigator.geolocation.getCurrentPosition(
-        (pos) => renderFinderResults(pos.coords.latitude, pos.coords.longitude, "your location"),
-        () => { note.textContent = "Location was not shared — pick your area from the list instead."; },
-        { maximumAge: 600000, timeout: 8000 }
-      );
-    });
-  }
+      if (note) note.textContent = "Looking up ZIP…";
+      try {
+        const place = await lookupZip(zip);
+        renderFinderResults(root, place.lat, place.lon, place.label);
+      } catch {
+        if (note) note.textContent = "Could not look up that ZIP — pick a city instead.";
+      }
+    };
+    if (zipGo && zipInput) {
+      zipGo.addEventListener("click", () => {
+        runZip();
+      });
+      zipInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          runZip();
+        }
+      });
+      zipInput.addEventListener("input", () => {
+        zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 5);
+      });
+    }
+  };
+
+  Array.from(document.querySelectorAll("[data-finder]")).forEach(bindFinder);
+
+  window.CARB_FINDER = { findSites, lookupZip, renderFinderResults };
 
   /* ---------- Full network grid (footer of homepage) ---------- */
 

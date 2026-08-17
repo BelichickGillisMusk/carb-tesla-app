@@ -10,10 +10,10 @@
 
   const TICKER = [
     "Jan 1 deadline: annual reporting fee due for registered entities.",
-    "Passing tests can be submitted up to 90 days before your CTC-VIS due date.",
-    "2013+ diesel usually needs HD-OBD ($119). 2012 and older usually needs OVI ($219).",
-    "VIN lookup reads the federal NHTSA file — it is not your CARB pass/fail status.",
-    "City teams cover ~50 miles. San Diego is county-only. Everywhere else uses statewide dispatch."
+    "Pro-tip: missing a PSIP / CTC window can lock the truck in CTC-VIS. Confirm dates there, not here.",
+    "Find a tester uses our network only — not a Google Maps shop list.",
+    "Smart sync: email engine-family tags to dispatch before anyone rolls.",
+    "VIN lookup reads the federal NHTSA file — it is not your CARB pass/fail status."
   ];
 
   const VIN_WEIGHTS = [8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2];
@@ -215,7 +215,7 @@
       "</div>" +
       '<p class="note">This is federal VIN identity from NHTSA, not your CARB CTC-VIS compliance record. Confirm the due date in CTC-VIS before you book.</p>' +
       '<div class="cta-row">' +
-      '<button class="hub-btn accent" type="button" data-go="finder">Find a tester for this truck</button>' +
+      '<a class="hub-btn accent" href="#find-tester">Find a tester for this truck</a>' +
       '<a class="hub-btn" href="tel:' + PHONE_TEL + '">Call ' + PHONE_DISPLAY + "</a>" +
       '<a class="hub-btn" href="mailto:' + EMAIL + "?subject=" + encodeURIComponent("VIN " + decoded.vin) +
       "&body=" + encodeURIComponent(
@@ -226,6 +226,20 @@
       ) + '">Email dispatch this VIN</a>' +
       "</div>";
     box.hidden = false;
+
+    const intakeVin = qs("[data-intake-vin]");
+    if (intakeVin) intakeVin.value = decoded.vin;
+    const afterNote = qs("[data-after-vin-note]");
+    if (afterNote) {
+      afterNote.textContent =
+        (yearMakeModel || "This VIN") +
+        " — pick a ZIP or location next. Suggested test: " +
+        test.label +
+        (test.price ? " ($" + test.price + ")" : "") +
+        ". This is not a CTC-VIS pass/fail.";
+    }
+    const afterFinder = qs("[data-finder-after-vin]");
+    if (afterFinder) afterFinder.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const bootTicker = () => {
@@ -271,13 +285,13 @@
         const decoded = await decodeVin(vin);
         if (lastVin !== vin) return;
         if (!decoded.usable) {
-          setStatus("VIN not found in the federal database. Check the characters and try again.", "err");
+          setStatus("VIN NOT FOUND: federal database lookup failed. Check the characters and try again.", "err");
           return;
         }
         if (!decoded.clean) {
           setStatus("Decoded with a warning — check digit may not match. Confirm the VIN on the truck.", "err");
         } else {
-          setStatus("Match from NHTSA vPIC.", "ok");
+          setStatus("Match from NHTSA vPIC — year/make/model only, not CTC-VIS status.", "ok");
         }
         renderResult(decoded, result);
       } catch (err) {
@@ -321,6 +335,53 @@
         submit.click();
       }
     });
+
+    const focusBtn = qs("[data-vin-focus]");
+    if (focusBtn) {
+      focusBtn.addEventListener("click", () => {
+        input.focus();
+        setStatus("Type the 17 characters from the door-jamb label. Camera OCR is not enabled on this page.");
+      });
+    }
+
+    const upload = qs("[data-vin-upload]");
+    if (upload) {
+      upload.addEventListener("change", () => {
+        const file = upload.files && upload.files[0];
+        upload.value = "";
+        if (!file) return;
+        const nameVin = cleanVin(file.name);
+        if (nameVin.length === 17) {
+          input.value = nameVin;
+          setStatus("Read 17 characters from the file name — confirm they match the truck, then decode.");
+          return;
+        }
+        input.focus();
+        setStatus("Photo OCR is not on this page. Type the VIN from the image, then tap Check registry status.", "err");
+      });
+    }
+  };
+
+  const bindIntake = () => {
+    const form = qs("[data-intake-form]");
+    if (!form) return;
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const company = String(data.get("company") || "").trim();
+      const phone = String(data.get("phone") || "").trim();
+      const vin = cleanVin(data.get("vin"));
+      const body =
+        "Document intake\n" +
+        "Company: " + company + "\n" +
+        "Phone: " + phone + "\n" +
+        "VIN: " + vin + "\n\n" +
+        "Attach cab card, engine tag, and plate photos.";
+      location.href =
+        "mailto:" + EMAIL +
+        "?subject=" + encodeURIComponent("Clean Truck Check document intake" + (vin ? " " + vin : "")) +
+        "&body=" + encodeURIComponent(body);
+    });
   };
 
   window.CARB_VIN = { decodeVin, cleanVin, checkDigitOk, recommendTest };
@@ -345,6 +406,7 @@
   bootTicker();
   bindNav();
   bindVinForm();
+  bindIntake();
   startView();
 
   /* Finder site still uses the in-network matcher from site.js. */
