@@ -12,7 +12,8 @@ San Diego County only, and the app is the catch-all for everywhere else.
   <p>Find a mobile tester near you — we come to your yard or job site:</p>
   <ul>
     <li><a href="https://carbcleantruckcheck.app" rel="noopener">CARB Clean Truck Check app</a> — <strong>Find a Tester</strong> matches you with our closest team anywhere in California</li>
-    <li><a href="https://cleantruckcheckroseville.com" rel="noopener">Roseville</a> · <a href="https://cleantruckcheckstockton.com" rel="noopener">Stockton</a> · <a href="https://cleantruckcheckfairfield.com" rel="noopener">Fairfield</a> · <a href="https://cleantruckcheckhayward.com" rel="noopener">Hayward</a> — within ~50 miles of each city</li>
+    <li><a href="https://cleantruckcheckvin.app" rel="noopener">VIN check</a> — decode the truck, then book the right test</li>
+    <li><a href="https://cleantruckcheckroseville.com" rel="noopener">Roseville</a> · <a href="https://cleantruckcheckstockton.com" rel="noopener">Stockton</a> · <a href="https://cleantruckchecklodi.com" rel="noopener">Lodi</a> · <a href="https://cleantruckcheckfairfield.com" rel="noopener">Fairfield</a> · <a href="https://cleantruckcheckhayward.com" rel="noopener">Hayward</a> — within ~50 miles of each city</li>
     <li><a href="https://norcalcarbmobile.com" rel="noopener">NorCal CARB Mobile</a> — Northern California hub</li>
     <li><a href="https://mobileovitest.com" rel="noopener">Mobile OVI Test</a> — statewide OVI smoke/opacity testing for older diesels</li>
     <li><a href="https://mobilecarbsmoketest.com" rel="noopener">Mobile CARB Testing — San Diego</a> — San Diego County only</li>
@@ -24,8 +25,9 @@ San Diego County only, and the app is the catch-all for everywhere else.
 ## Plain-text version (for platforms that strip HTML)
 
 > **Need a CARB Clean Truck Check test?** Request a mobile tester anywhere in
-> California at carbcleantruckcheck.app. Near Roseville, Stockton, Fairfield, or Hayward
+> California at carbcleantruckcheck.app. Decode a VIN at cleantruckcheckvin.app.
+> Near Roseville, Stockton, Lodi, Fairfield, or Hayward
 > (within ~50 miles)? Use cleantruckcheckroseville.com, cleantruckcheckstockton.com,
-> cleantruckcheckfairfield.com, or cleantruckcheckhayward.com. NorCal:
+> cleantruckchecklodi.com, cleantruckcheckfairfield.com, or cleantruckcheckhayward.com. NorCal:
 > norcalcarbmobile.com. Statewide OVI smoke testing: mobileovitest.com.
 > San Diego County: mobilecarbsmoketest.com. Or call 415-900-8563.
